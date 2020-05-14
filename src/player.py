@@ -9,4 +9,4 @@ class Player:
         self.location = location
 
     def __str__(self):
-        return 'Name: {self.name}, Current location: {self.location}'.format(self=self)
+        return str(self.location)

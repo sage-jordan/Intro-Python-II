@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -41,7 +42,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 sage = Player('sage', 'outside')
-print(sage)
+# print(sage)
 
 # Write a loop that:
 #
@@ -55,23 +56,59 @@ print(sage)
 # If the user enters "q", quit the game.
 
 
+# I don't there's a need to do this but I'm trying anything at this point
+outside = room['outside']
+foyer = room['foyer']
+overlook = room['overlook']
+narrow = room['narrow']
+treasure = room['treasure']
+
+# Test
+print("60", outside.description)
+
+# Defines current room and description
+# can this work as my "current room?" class Sage => 'description'
+print("61", sage)
+# doesn't seem to work
+description = room[sage.__str__()].__str__()
+
+# Prints current room name and description
+print("65 Current Room: " + sage.__str__() +
+      "\nDescription: " + description)
+
+# Initiate user input
 user = str(input("[w] North [d] East [s] South [a] West [q] Quit"))
 
-
+# Start loop
 while not user == 'q':
-    currentRoom = sage.location
-    print(currentRoom)
-    description = room[currentRoom].description
-    print("Current Room: {currentRoom}\nDescription: {description}".format(
-        currentRoom=currentRoom, description=description))
+
+    # # Defines current room and description
+    # currentRoom = sage.location
+    # print("65", currentRoom)
+    # description = room[currentRoom].description
+
+    # # Prints current room name and description
+    # print("69 Current Room: " + currentRoom +
+    #       "\nDescription: " + description)
+
+    # Handles user input
     if user == 'w':
-        sage.location = room[currentRoom].n_to
+        # Tried a bunch of stuff but \/ this => KeyError: '<room.Room object at 0x01323D60>'
+        sage.location = room[f"{sage.__str__()}"].n_to
+        print("86", sage.location)
     elif user == 'd':
-        sage.location = room[currentRoom].e_to
+        sage.location = room[sage.__str__()].e_to
     elif user == 's':
-        sage.location = room[currentRoom].s_to
+        sage.location = room[sage.__str__()].s_to
     elif user == 'a':
-        sage.location = room[currentRoom].w_to
+        sage.location = room[sage.__str__()].w_to
     else:
         print("Invalid selection. Please try again.")
+
+    # # Prints current room name and description
+    # print("97 Current Room: " + sage.__str__() +
+    #       "\nDescription: " + description)
+    # # User input
+    # user = str(input("[w] North [d] East [s] South [a] West [q] Quit"))
+
 print("Thanks for playing!")
