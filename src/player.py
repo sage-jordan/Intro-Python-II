@@ -6,7 +6,7 @@ class Player:
     def __init__(self, name, room, items=[]):
         self.name = name
         self.room = room
-        self.items = []
+        self.items = items
 
     def __str__(self):
         return f'{self.name} is in {self.room.name}'
