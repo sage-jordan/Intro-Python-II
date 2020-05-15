@@ -1,3 +1,4 @@
+from termcolor import colored, cprint
 from room import Room
 from player import Player
 import textwrap
@@ -55,22 +56,32 @@ player = Player('Sage', room['outside'])
 #
 # If the user enters "q", quit the game.
 
-directions = {"n": "n_to", "e": "e_to", "s": "s_to", "w": "w_to"}
-print(player)
-choice = input("Which way? [n] North [e] East [s] South [w] West [q] Quit")
 
-while not choice == 'q':
-    if choice == "n" or choice == "e" or choice == "s" or choice == "w":
+directions = {'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to'}
+moving = True
+
+while moving:
+    print('-------------------------------')
+    if player.room.name == 'Outside Cave Entrance':
+        print("You are " + player.room.name)
+        print(player.room.description)
+    elif player.room.name == 'Treasure Chamber':
+        cprint("You found the Treasure Chamber!", 'yellow', attrs=['blink'])
+        print(player.room.description)
+    else:
+        print("You are in the " + player.room.name)
+        print(player.room.description)
+
+    cprint('Pick a Direction: [n] North [e] East [s] South [w] West [q] Quit', 'blue', attrs=[
+           'blink'])
+    choice = input("Which way, Gandalf? Input: ")
+
+    if not choice == 'q':
+        direction = directions[choice]
         try:
-            direction = directions[choice]
-            print(direction)
-            player.room = player.move(direction)
+            player.room = getattr(player.room, direction)
         except AttributeError:
             print("Sorry you can't go that way!")
     else:
-        print("Please pick a valid input")
-
-    print(player)
-    choice = input("Which way? [n] North [e] East [s] South [w] West [q] Quit")
-
-print("Thanks for playing!")
+        print("Thanks for playing!")
+        exit()

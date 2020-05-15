@@ -11,5 +11,6 @@ class Player:
     def __str__(self):
         return f'{self.name} is in {self.room.name}'
 
-    def move(self, direction):
-        self.room = room[self.room.name].direction
+    def get(self, item):
+        self.items.append(item)
+        item.on_take()
