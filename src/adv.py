@@ -41,7 +41,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-sage = Player('sage', 'outside')
+player = Player('Sage', room['outside'])
 # print(sage)
 
 # Write a loop that:
@@ -55,60 +55,22 @@ sage = Player('sage', 'outside')
 #
 # If the user enters "q", quit the game.
 
+directions = {"n": "n_to", "e": "e_to", "s": "s_to", "w": "w_to"}
+print(player)
+choice = input("Which way? [n] North [e] East [s] South [w] West [q] Quit")
 
-# I don't there's a need to do this but I'm trying anything at this point
-outside = room['outside']
-foyer = room['foyer']
-overlook = room['overlook']
-narrow = room['narrow']
-treasure = room['treasure']
-
-# Test
-print("60", outside.description)
-
-# Defines current room and description
-# can this work as my "current room?" class Sage => 'description'
-print("61", sage)
-# doesn't seem to work
-description = room[sage.__str__()].__str__()
-
-# Prints current room name and description
-print("65 Current Room: " + sage.__str__() +
-      "\nDescription: " + description)
-
-# Initiate user input
-user = str(input("[w] North [d] East [s] South [a] West [q] Quit"))
-
-# Start loop
-while not user == 'q':
-
-    # # Defines current room and description
-    # currentRoom = sage.location
-    # print("65", currentRoom)
-    # description = room[currentRoom].description
-
-    # # Prints current room name and description
-    # print("69 Current Room: " + currentRoom +
-    #       "\nDescription: " + description)
-
-    # Handles user input
-    if user == 'w':
-        # Tried a bunch of stuff but \/ this => KeyError: '<room.Room object at 0x01323D60>'
-        sage.location = room[f"{sage.__str__()}"].n_to
-        print("86", sage.location)
-    elif user == 'd':
-        sage.location = room[sage.__str__()].e_to
-    elif user == 's':
-        sage.location = room[sage.__str__()].s_to
-    elif user == 'a':
-        sage.location = room[sage.__str__()].w_to
+while not choice == 'q':
+    if choice == "n" or choice == "e" or choice == "s" or choice == "w":
+        try:
+            direction = directions[choice]
+            print(direction)
+            player.room = player.move(direction)
+        except AttributeError:
+            print("Sorry you can't go that way!")
     else:
-        print("Invalid selection. Please try again.")
+        print("Please pick a valid input")
 
-    # # Prints current room name and description
-    # print("97 Current Room: " + sage.__str__() +
-    #       "\nDescription: " + description)
-    # # User input
-    # user = str(input("[w] North [d] East [s] South [a] West [q] Quit"))
+    print(player)
+    choice = input("Which way? [n] North [e] East [s] South [w] West [q] Quit")
 
 print("Thanks for playing!")

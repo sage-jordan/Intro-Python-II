@@ -3,10 +3,13 @@
 
 
 class Player:
-
-    def __init__(self, name, location):
+    def __init__(self, name, room, items=[]):
         self.name = name
-        self.location = location
+        self.room = room
+        self.items = []
 
     def __str__(self):
-        return str(self.location)
+        return f'{self.name} is in {self.room.name}'
+
+    def move(self, direction):
+        self.room = room[self.room.name].direction
