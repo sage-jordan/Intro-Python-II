@@ -1,4 +1,7 @@
+from termcolor import colored, cprint
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -39,6 +42,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player('Sage', room['outside'])
+# print(sage)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +55,48 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+directions = {'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to'}
+moving = True
+
+while moving:
+
+    print('-------------------------------')
+    print(player.room.print_items())
+    print('-------------------------------')
+
+    if player.room.name == 'Outside Cave Entrance':
+
+        print("You are " + player.room.name)
+        print(player.room.description)
+
+    elif player.room.name == 'Treasure Chamber':
+
+        cprint("You found the Treasure Chamber!", 'yellow', attrs=['blink'])
+        print(player.room.description)
+
+    else:
+
+        print("You are in the " + player.room.name)
+        print(player.room.description)
+
+    cprint('Pick a Direction: [n] North [e] East [s] South [w] West [g] Get Item [q] Quit', 'blue', attrs=[
+           'blink'])
+    choice = input("Which way, Gandalf? Input: ")
+
+    if choice == 'g' and len(player.room.items) > 0:
+        player.get()
+    elif choice == 'g':
+        cprint("There is nothing to pick up", 'red', attrs=['underline'])
+    else:
+        if not choice == 'q':
+            direction = directions[choice]
+            try:
+                player.room = getattr(player.room, direction)
+            except AttributeError:
+                print("Sorry you can't go that way!")
+
+        else:
+            print("Thanks for playing!")
+            exit()
